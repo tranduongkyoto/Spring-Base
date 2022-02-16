@@ -8,19 +8,27 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="security" />
-        <module name="api" />
         <module name="data" />
-        <module name="taco" />
         <module name="domain" />
+        <module name="api" />
+        <module name="rabbitmq" />
+        <module name="email" />
+        <module name="taco" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="simple-integration" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api" options="-parameters" />
       <module name="data" options="-parameters" />
       <module name="domain" options="-parameters" />
+      <module name="email" options="-parameters" />
+      <module name="rabbitmq" options="-parameters" />
       <module name="security" options="-parameters" />
+      <module name="simple-integration" options="-parameters" />
       <module name="taco" options="-parameters" />
     </option>
   </component>

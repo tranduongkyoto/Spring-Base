@@ -1,6 +1,7 @@
 package tranduongkyoto;
 import java.util.Arrays;
 
+import com.fasterxml.jackson.core.JsonToken;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,7 @@ public class DevelopmentConfig {
                                         //PasswordEncoder passwordEncoder,
                                         TacoRepository tacoRepo) { // user repo for ease of testing with a built-in user
         return args -> {
+            System.out.println("22");
             Ingredient flourTortilla = new Ingredient("FLTO", "Flour Tortilla", Type.WRAP);
             Ingredient cornTortilla = new Ingredient("COTO", "Corn Tortilla", Type.WRAP);
             Ingredient groundBeef = new Ingredient("GRBF", "Ground Beef", Type.PROTEIN);
@@ -40,7 +42,7 @@ public class DevelopmentConfig {
             repo.save(salsa);
             repo.save(sourCream);
 
-
+            System.out.println("44");
             userRepo.save(new User("habuma", "password",
                     "Craig Walls", "123 North Street", "Cross Roads", "TX",
                     "76227", "123-123-1234"));
@@ -59,7 +61,7 @@ public class DevelopmentConfig {
             taco3.setName("Veg-Out");
             taco3.setIngredients(Arrays.asList(flourTortilla, cornTortilla, tomatoes, lettuce, salsa));
             tacoRepo.save(taco3);
-
+            System.out.println("64");
         };
     }
 
