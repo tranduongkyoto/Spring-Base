@@ -15,8 +15,9 @@
         <module>domain</module>
         <module>security</module>
         <module>rabbitmq</module>
-        <module>simple-integration</module>
         <module>email</module>
+        <module>kafka</module>
+        <module>restClient</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
