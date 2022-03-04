@@ -19,10 +19,10 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Entity
-@Table(name="Taco_Order")
+@Document
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;

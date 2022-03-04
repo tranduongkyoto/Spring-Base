@@ -3,7 +3,6 @@ package tranduongkyoto;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,9 +13,12 @@ import javax.validation.constraints.Size;
 
 
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 @Data
-@Entity
+@RestResource(rel="tacos", path="tacos")
+@Document
 public class Taco {
 
     @Id

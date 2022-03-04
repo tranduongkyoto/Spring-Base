@@ -3,6 +3,8 @@ package tranduongkyoto.api;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import tranduongkyoto.Order;
 import tranduongkyoto.OrderRepository;
 
@@ -17,51 +19,53 @@ public class OrderApiController {
     }
 
     @GetMapping(produces = "application/json")
-    public Iterable<Order> getAllOrders(){
+    public Flux<Order> getAllOrders(){
         return orderRepository.findAll();
     }
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Order postOrder(@RequestBody Order order){
+    public Mono<Order> postOrder(@RequestBody Order order){
         return orderRepository.save(order);
     }
 
     @PutMapping(path = "/{orderId}", consumes = "application/json")
-    public  Order putOrder(@RequestBody Order order){
-        return orderRepository.save(order);
+    public  Mono<Order> putOrder(@RequestBody Mono<Order> order){
+        return order.flatMap(orderRepository::save);
     }
 
     @PatchMapping(path="/{orderId}", consumes="application/json")
-    public Order patchOrder(@PathVariable("orderId") Long orderId,
+    public Mono<Order> patchOrder(@PathVariable("orderId") Long orderId,
                             @RequestBody Order patch) {
 
-        Order order = orderRepository.findById(orderId).get();
-        if (patch.getDeliveryName() != null) {
-            order.setDeliveryName(patch.getDeliveryName());
-        }
-        if (patch.getDeliveryStreet() != null) {
-            order.setDeliveryStreet(patch.getDeliveryStreet());
-        }
-        if (patch.getDeliveryCity() != null) {
-            order.setDeliveryCity(patch.getDeliveryCity());
-        }
-        if (patch.getDeliveryState() != null) {
-            order.setDeliveryState(patch.getDeliveryState());
-        }
-        if (patch.getDeliveryZip() != null) {
-            order.setDeliveryZip(patch.getDeliveryState());
-        }
-        if (patch.getCcNumber() != null) {
-            order.setCcNumber(patch.getCcNumber());
-        }
-        if (patch.getCcExpiration() != null) {
-            order.setCcExpiration(patch.getCcExpiration());
-        }
-        if (patch.getCcCVV() != null) {
-            order.setCcCVV(patch.getCcCVV());
-        }
-        return orderRepository.save(order);
+        return orderRepository.findById(orderId)
+                .map(order ->{
+                    if (patch.getDeliveryName() != null) {
+                        order.setDeliveryName(patch.getDeliveryName());
+                    }
+                    if (patch.getDeliveryStreet() != null) {
+                        order.setDeliveryStreet(patch.getDeliveryStreet());
+                    }
+                    if (patch.getDeliveryCity() != null) {
+                        order.setDeliveryCity(patch.getDeliveryCity());
+                    }
+                    if (patch.getDeliveryState() != null) {
+                        order.setDeliveryState(patch.getDeliveryState());
+                    }
+                    if (patch.getDeliveryZip() != null) {
+                        order.setDeliveryZip(patch.getDeliveryState());
+                    }
+                    if (patch.getCcNumber() != null) {
+                        order.setCcNumber(patch.getCcNumber());
+                    }
+                    if (patch.getCcExpiration() != null) {
+                        order.setCcExpiration(patch.getCcExpiration());
+                    }
+                    if (patch.getCcCVV() != null) {
+                        order.setCcCVV(patch.getCcCVV());
+                    }
+                    return order;
+                }).flatMap(orderRepository::save);
     }
 
     @DeleteMapping("/{orderId}")

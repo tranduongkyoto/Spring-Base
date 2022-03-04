@@ -18,6 +18,7 @@
         <module>email</module>
         <module>kafka</module>
         <module>restClient</module>
+        <module>reactor</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
